@@ -1,14 +1,23 @@
+import 'package:bus_reservation/controller/login_controller.dart';
+import 'package:bus_reservation/screens/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
   TextEditingController _usernameTEC = new TextEditingController();
   TextEditingController _passwordTEC = new TextEditingController();
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  Map<String, dynamic> map = new Map<String, dynamic>();
+  LoginController loginController = Get.find();
 
   void validateAndSave() {
     if (_formKey.currentState.validate()) {
-      print("${_usernameTEC.text}");
+      map['username'] = _usernameTEC.text;
+      map['password'] = _passwordTEC.text;
+      loginController.doLogin(map);
+      print(loginController.storage.read("token"));
+      Get.offAll(HomePage());
     }
   }
 
@@ -27,6 +36,7 @@ class LoginPage extends StatelessWidget {
             _passWord(_passwordTEC),
             TextButton(
               onPressed: () {
+                showLoaderDialog(context);
                 validateAndSave();
               },
               child: Text("Login"),
@@ -83,5 +93,23 @@ Widget _passWord(TextEditingController passwordTEC) {
       controller: passwordTEC,
       obscureText: true,
     ),
+  );
+}
+
+showLoaderDialog(BuildContext context) {
+  AlertDialog alert = AlertDialog(
+    content: new Row(
+      children: [
+        CircularProgressIndicator(),
+        Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+      ],
+    ),
+  );
+  showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
   );
 }

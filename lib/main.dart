@@ -3,8 +3,6 @@ import 'package:bus_reservation/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:splashscreen/splashscreen.dart';
 import 'controller/auth_controller.dart';
 
 void main() async {
@@ -23,16 +21,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.amber,
       ),
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(
-        seconds: 5,
-        backgroundColor: Colors.amber,
-        navigateAfterSeconds: loginController.storage.read("token") == null ||
-                loginController.storage.read("token") == ""
-            ? LoginPage()
-            : HomePage(),
-        loadingText: Text("Bus Reservation"),
-        title: Text("Checking"),
-      ),
+      home: loginController.storage.read("token") == null ||
+              loginController.storage.read("token") == ""
+          ? LoginPage()
+          : HomePage(),
     );
   }
 }

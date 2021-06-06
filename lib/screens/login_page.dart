@@ -13,7 +13,7 @@ class LoginPage extends StatelessWidget {
   AuthController authController = Get.find();
 
   void validateAndSave() {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       map[Constants.username] = _usernameTEC.text;
       map[Constants.password] = _passwordTEC.text;
       authController.doLogin(map);
@@ -32,7 +32,7 @@ class LoginPage extends StatelessWidget {
             _passWord(_passwordTEC),
             TextButton(
               onPressed: () {
-                FocusManager.instance.primaryFocus.unfocus();
+                FocusManager.instance.primaryFocus!.unfocus();
                 validateAndSave();
               },
               child: Text(
@@ -44,7 +44,7 @@ class LoginPage extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                FocusManager.instance.primaryFocus.unfocus();
+                FocusManager.instance.primaryFocus!.unfocus();
                 Get.to(SignInPage());
               },
               child: Text(
@@ -80,7 +80,7 @@ Widget _userName(TextEditingController usernameTEC) {
         ),
       ),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return "Enter Username";
         }
         return null;
@@ -104,7 +104,7 @@ Widget _passWord(TextEditingController passwordTEC) {
         labelStyle: TextStyle(color: Colors.amber[800]),
       ),
       validator: (value) {
-        if (value.isEmpty) {
+        if (value!.isEmpty) {
           return "Enter Password";
         }
         return null;

@@ -13,5 +13,18 @@ dismissLoadingWidget() {
 }
 
 showSnackBar(String title, String msg) {
-  Get.snackbar(title, msg);
+  Get.snackbar(
+    title,
+    msg,
+  );
+}
+
+showBottomSnackBar(String title, String msg) {
+  Get.snackbar(
+    title,
+    msg,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: Colors.red,
+    colorText: Colors.white,
+  );
 }

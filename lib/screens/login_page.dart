@@ -23,9 +23,6 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Bus Reservation"),
-      ),
       body: Form(
         key: _formKey,
         child: Column(
@@ -35,12 +32,14 @@ class LoginPage extends StatelessWidget {
             _passWord(_passwordTEC),
             TextButton(
               onPressed: () {
+                FocusManager.instance.primaryFocus.unfocus();
                 validateAndSave();
               },
               child: Text("Login"),
             ),
             TextButton(
               onPressed: () {
+                FocusManager.instance.primaryFocus.unfocus();
                 Get.to(SignInPage());
               },
               child: Text("Create account"),

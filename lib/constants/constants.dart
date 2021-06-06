@@ -11,4 +11,7 @@ class Constants {
   static const String email = "email";
   static const String password2 = "password2";
   static const String nonFieldErrors = "non_field_errors";
+  static const String networkError = "Network Error";
+  static const String internetError =
+      "Seems your mobile is not connected to internet";
 }

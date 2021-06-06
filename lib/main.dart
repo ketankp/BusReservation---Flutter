@@ -3,6 +3,7 @@ import 'package:bus_reservation/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:splashscreen/splashscreen.dart';
 import 'controller/auth_controller.dart';
 
 void main() async {
@@ -17,11 +18,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
-      home: loginController.storage.read("token") == null ||
-              loginController.storage.read("token") == ""
-          ? LoginPage()
-          : HomePage(),
+      theme: ThemeData(
+        primarySwatch: Colors.amber,
+      ),
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(
+        seconds: 5,
+        backgroundColor: Colors.amber,
+        navigateAfterSeconds: loginController.storage.read("token") == null ||
+                loginController.storage.read("token") == ""
+            ? LoginPage()
+            : HomePage(),
+        loadingText: Text("Bus Reservation"),
+        title: Text("Checking"),
+      ),
     );
   }
 }

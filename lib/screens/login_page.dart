@@ -35,14 +35,24 @@ class LoginPage extends StatelessWidget {
                 FocusManager.instance.primaryFocus.unfocus();
                 validateAndSave();
               },
-              child: Text("Login"),
+              child: Text(
+                "Login",
+                style: TextStyle(
+                  color: Colors.blue,
+                ),
+              ),
             ),
             TextButton(
               onPressed: () {
                 FocusManager.instance.primaryFocus.unfocus();
                 Get.to(SignInPage());
               },
-              child: Text("Create account"),
+              child: Text(
+                "Create account",
+                style: TextStyle(
+                  color: Colors.blue,
+                ),
+              ),
             ),
           ],
         ),
@@ -57,9 +67,13 @@ Widget _userName(TextEditingController usernameTEC) {
     child: TextFormField(
       enabled: true,
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.person),
+        prefixIcon: Icon(
+          Icons.person,
+          color: Colors.amber[800],
+        ),
         labelText: "Username",
         hintText: "abc",
+        labelStyle: TextStyle(color: Colors.amber[800]),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
           borderSide: BorderSide(color: Colors.amber),
@@ -81,13 +95,13 @@ Widget _passWord(TextEditingController passwordTEC) {
     padding: EdgeInsets.all(15.0),
     child: TextFormField(
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.lock),
+        prefixIcon: Icon(Icons.lock, color: Colors.amber[800]),
         labelText: "Password",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
           borderSide: BorderSide(color: Colors.amber),
         ),
-        labelStyle: TextStyle(),
+        labelStyle: TextStyle(color: Colors.amber[800]),
       ),
       validator: (value) {
         if (value.isEmpty) {

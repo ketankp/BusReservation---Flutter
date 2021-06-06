@@ -41,6 +41,7 @@ class SignInPage extends StatelessWidget {
                 _password2(_password2TEC),
                 TextButton(
                   onPressed: () {
+                    FocusManager.instance.primaryFocus.unfocus();
                     validateAndSubmit();
                   },
                   child: Text("Sign In"),

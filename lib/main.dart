@@ -3,7 +3,7 @@ import 'package:bus_reservation/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'controller/login_controller.dart';
+import 'controller/auth_controller.dart';
 
 void main() async {
   await GetStorage.init();
@@ -13,7 +13,7 @@ void main() async {
 // ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-  LoginController loginController = Get.put(LoginController());
+  AuthController loginController = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

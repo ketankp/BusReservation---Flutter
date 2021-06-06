@@ -1,5 +1,6 @@
-import 'package:bus_reservation/controller/login_controller.dart';
-import 'package:bus_reservation/screens/home_page.dart';
+import 'package:bus_reservation/constants/constants.dart';
+import 'package:bus_reservation/controller/auth_controller.dart';
+import 'package:bus_reservation/screens/signin_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,15 +10,13 @@ class LoginPage extends StatelessWidget {
   TextEditingController _passwordTEC = new TextEditingController();
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   Map<String, dynamic> map = new Map<String, dynamic>();
-  LoginController loginController = Get.find();
+  AuthController authController = Get.find();
 
   void validateAndSave() {
     if (_formKey.currentState.validate()) {
-      map['username'] = _usernameTEC.text;
-      map['password'] = _passwordTEC.text;
-      loginController.doLogin(map);
-      print(loginController.storage.read("token"));
-      Get.offAll(HomePage());
+      map[Constants.username] = _usernameTEC.text;
+      map[Constants.password] = _passwordTEC.text;
+      authController.doLogin(map);
     }
   }
 
@@ -36,10 +35,15 @@ class LoginPage extends StatelessWidget {
             _passWord(_passwordTEC),
             TextButton(
               onPressed: () {
-                showLoaderDialog(context);
                 validateAndSave();
               },
               child: Text("Login"),
+            ),
+            TextButton(
+              onPressed: () {
+                Get.to(SignInPage());
+              },
+              child: Text("Create account"),
             ),
           ],
         ),
@@ -52,14 +56,15 @@ Widget _userName(TextEditingController usernameTEC) {
   return Padding(
     padding: EdgeInsets.all(15.0),
     child: TextFormField(
+      enabled: true,
       decoration: InputDecoration(
         prefixIcon: Icon(Icons.person),
         labelText: "Username",
         hintText: "abc",
         border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
           borderSide: BorderSide(color: Colors.amber),
         ),
-        labelStyle: TextStyle(),
       ),
       validator: (value) {
         if (value.isEmpty) {
@@ -80,6 +85,7 @@ Widget _passWord(TextEditingController passwordTEC) {
         prefixIcon: Icon(Icons.lock),
         labelText: "Password",
         border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
           borderSide: BorderSide(color: Colors.amber),
         ),
         labelStyle: TextStyle(),
@@ -93,23 +99,5 @@ Widget _passWord(TextEditingController passwordTEC) {
       controller: passwordTEC,
       obscureText: true,
     ),
-  );
-}
-
-showLoaderDialog(BuildContext context) {
-  AlertDialog alert = AlertDialog(
-    content: new Row(
-      children: [
-        CircularProgressIndicator(),
-        Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
-      ],
-    ),
-  );
-  showDialog(
-    barrierDismissible: false,
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
   );
 }

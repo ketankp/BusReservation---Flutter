@@ -8,8 +8,18 @@ class Api {
   Future<dynamic> doLogin(Map<String, dynamic> json) async {
     Uri url = Uri.parse(Constants.baseUrl + "api-login/");
     http.Response response = await http.post(url, body: json);
-    if (response.statusCode == 200) {
+    return JSON.json.decode(response.body);
+  }
+
+  Future<dynamic> doSignIn(Map<String, dynamic> json) async {
+    Uri url = Uri.parse(Constants.baseUrl + "register/");
+    http.Response response = await http.post(url, body: json);
+    if (response.statusCode != 201) {
       return JSON.json.decode(response.body);
+    } else if (response.statusCode == 201) {
+      Map<String, dynamic> map = {};
+      map[Constants.statusBody] = "true";
+      return map;
     } else {
       return null;
     }

@@ -11,3 +11,7 @@ showLoading() {
 dismissLoadingWidget() {
   Get.back();
 }
+
+showSnackBar(String title, String msg) {
+  Get.snackbar(title, msg);
+}

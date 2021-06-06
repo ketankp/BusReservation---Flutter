@@ -1,11 +1,10 @@
-import 'package:bus_reservation/controller/login_controller.dart';
-import 'package:bus_reservation/screens/login_page.dart';
+import 'package:bus_reservation/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
-  LoginController loginController = Get.find();
+  AuthController authController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,8 +15,7 @@ class HomePage extends StatelessWidget {
         child: Center(
           child: TextButton(
             onPressed: () {
-              loginController.storage.remove("token");
-              Get.offAll(LoginPage());
+              authController.doLogout();
             },
             child: Text("LogOut"),
           ),

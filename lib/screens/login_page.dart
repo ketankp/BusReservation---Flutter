@@ -45,7 +45,7 @@ class LoginPage extends StatelessWidget {
             TextButton(
               onPressed: () {
                 FocusManager.instance.primaryFocus!.unfocus();
-                Get.to(SignInPage());
+                Get.to(() => SignInPage());
               },
               child: Text(
                 "Create account",

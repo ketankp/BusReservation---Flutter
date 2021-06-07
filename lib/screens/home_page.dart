@@ -1,8 +1,13 @@
 import 'package:bus_reservation/controller/homepage_controller.dart';
+import 'package:bus_reservation/screens/tabs/booking_tab.dart';
+import 'package:bus_reservation/screens/tabs/home_tab.dart';
+import 'package:bus_reservation/screens/tabs/profile_tab.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends GetView<HomePageController> {
+  // HomePage({required Key key}) : super(key: key);
   Widget build(BuildContext context) {
     return GetBuilder<HomePageController>(
         init: HomePageController(),
@@ -11,33 +16,47 @@ class HomePage extends StatelessWidget {
             appBar: AppBar(
               title: Text("Bus Reservation"),
             ),
-            body: IndexedStack(
-              index: controller.tabIndex,
+            body: PageView(
+              controller: controller.tabIndex,
               children: [
-                Text("Home"),
-                Text("booking"),
-                Text("account"),
+                HomeTab(),
+                BookingTab(),
+                ProfileTab(),
               ],
             ),
-            bottomNavigationBar: BottomNavigationBar(
-              onTap: controller.changeTabIndex,
-              currentIndex: controller.tabIndex,
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: "Home",
+            bottomNavigationBar: ValueBuilder<int?>(
+              initialValue: 0,
+              builder: (value, updateFn) => Container(
+                child: BottomNavigationBar(
+                  elevation: 6,
+                  fixedColor: Colors.amber[800],
+                  currentIndex: value != null ? value : 0,
+                  onTap: (tab) {
+                    controller.tabIndex.animateToPage(
+                      tab,
+                      duration: Duration(seconds: 1),
+                      curve: Curves.ease,
+                    );
+                    updateFn(tab);
+                  },
+                  items: [
+                    _bottomNavigatorBarItem(CupertinoIcons.home, "Home"),
+                    _bottomNavigatorBarItem(
+                        CupertinoIcons.calendar, "My Booking"),
+                    _bottomNavigatorBarItem(
+                        CupertinoIcons.profile_circled, "My Account"),
+                  ],
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.calendar_today),
-                  label: "My Booking",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.account_circle),
-                  label: "My Account",
-                ),
-              ],
+              ),
             ),
           );
         });
   }
+}
+
+_bottomNavigatorBarItem(IconData icon, String label) {
+  return BottomNavigationBarItem(
+    icon: Icon(icon),
+    label: label,
+  );
 }

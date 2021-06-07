@@ -20,7 +20,8 @@ class AuthController extends GetxController {
       if (value) {
         try {
           showLoading();
-          Map<String, dynamic> response = (await api.doLogin(map) as Map) as Map<String, dynamic>;
+          Map<String, dynamic> response =
+              (await api.doLogin(map) as Map) as Map<String, dynamic>;
           if (response.containsKey(Constants.token)) {
             storage.write(Constants.token, response[Constants.token]);
             Get.offAll(HomePage());
@@ -46,7 +47,8 @@ class AuthController extends GetxController {
       if (value) {
         try {
           showLoading();
-          Map<String, dynamic> response = (await api.doSignIn(map) as Map) as Map<String, dynamic>;
+          Map<String, dynamic> response =
+              (await api.doSignIn(map) as Map) as Map<String, dynamic>;
           if (response.isNotEmpty) {
             dismissLoadingWidget();
             if (response.containsKey(Constants.username)) {
@@ -79,6 +81,7 @@ class AuthController extends GetxController {
   void doLogout() {
     showLoading();
     storage.remove(Constants.token);
+    Get.delete();
     Get.offAll(LoginPage());
   }
 }

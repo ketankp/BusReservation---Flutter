@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:bus_reservation/constants/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as JSON;
@@ -37,5 +38,14 @@ class Api {
     } else {
       return null;
     }
+  }
+
+  Future<dynamic> getData(String model, String token) async {
+    Uri url = Uri.parse(Constants.baseUrl + "$model/");
+    http.Response response = await http.get(
+      url,
+      headers: {HttpHeaders.authorizationHeader: token},
+    );
+    return JSON.json.decode(response.body);
   }
 }

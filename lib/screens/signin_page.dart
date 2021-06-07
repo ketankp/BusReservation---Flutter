@@ -10,6 +10,8 @@ class SignInPage extends StatelessWidget {
   TextEditingController _emailTEC = new TextEditingController();
   TextEditingController _passwordTEC = new TextEditingController();
   TextEditingController _password2TEC = new TextEditingController();
+  TextEditingController _firstNameTEC = new TextEditingController();
+  TextEditingController _lastNameTEC = new TextEditingController();
   Map<String, dynamic> map = new Map<String, dynamic>();
   AuthController authController = Get.find();
 
@@ -19,7 +21,8 @@ class SignInPage extends StatelessWidget {
       map[Constants.email] = _emailTEC.text;
       map[Constants.password] = _passwordTEC.text;
       map[Constants.password2] = _password2TEC.text;
-
+      map[Constants.firstName] = _firstNameTEC.text;
+      map[Constants.lastName] = _lastNameTEC.text;
       authController.doSignIn(map);
     }
   }
@@ -27,9 +30,8 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Column(
@@ -37,6 +39,8 @@ class SignInPage extends StatelessWidget {
               children: <Widget>[
                 _userName(_usernameTEC),
                 _email(_emailTEC),
+                _name(_firstNameTEC, "First Name"),
+                _name(_lastNameTEC, "Last Name"),
                 _password(_passwordTEC),
                 _password2(_password2TEC),
                 TextButton(
@@ -44,7 +48,12 @@ class SignInPage extends StatelessWidget {
                     FocusManager.instance.primaryFocus!.unfocus();
                     validateAndSubmit();
                   },
-                  child: Text("Sign In"),
+                  child: Text(
+                    "Sign In",
+                    style: TextStyle(
+                      color: Colors.blue,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -60,14 +69,17 @@ Widget _userName(TextEditingController username) {
     padding: EdgeInsets.all(15.0),
     child: TextFormField(
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.person),
+        prefixIcon: Icon(
+          Icons.person,
+          color: Colors.amber[800],
+        ),
         labelText: "Username",
         hintText: "abc",
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
           borderSide: BorderSide(color: Colors.amber),
         ),
-        labelStyle: TextStyle(),
+        labelStyle: TextStyle(color: Colors.amber[800]),
       ),
       validator: (value) {
         if (value!.isEmpty) {
@@ -87,7 +99,9 @@ Widget _email(TextEditingController email) {
       decoration: InputDecoration(
         labelText: "Email",
         hintText: "abc@gmail.com",
-        prefixIcon: Icon(Icons.email),
+        prefixIcon: Icon(
+          Icons.email,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
           borderSide: BorderSide(color: Colors.amber),
@@ -148,6 +162,29 @@ Widget _password2(TextEditingController password2) {
         return null;
       },
       obscureText: true,
+    ),
+  );
+}
+
+Widget _name(TextEditingController name, String label) {
+  return Padding(
+    padding: EdgeInsets.all(15.0),
+    child: TextFormField(
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(Icons.text_format),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+          borderSide: BorderSide(color: Colors.amber),
+        ),
+      ),
+      controller: name,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Enter valid $label";
+        }
+        return null;
+      },
     ),
   );
 }

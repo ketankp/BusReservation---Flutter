@@ -14,4 +14,6 @@ class Constants {
   static const String networkError = "Network Error";
   static const String internetError =
       "Seems your mobile is not connected to internet";
+  static const String firstName = "first_name";
+  static const String lastName = "last_name";
 }

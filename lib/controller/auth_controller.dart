@@ -31,7 +31,6 @@ class AuthController extends GetxController {
                 Constants.loginFailed, response[Constants.nonFieldErrors][0]);
           }
         } catch (_) {
-          print(_);
           dismissLoadingWidget();
           Get.snackbar(Constants.loginFailed, Constants.tryAgain);
         }

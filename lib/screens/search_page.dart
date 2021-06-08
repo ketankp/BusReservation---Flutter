@@ -1,4 +1,5 @@
 import 'package:bus_reservation/controller/homepage_controller.dart';
+import 'package:bus_reservation/modals/location_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -37,16 +38,20 @@ class SearchPage extends StatelessWidget {
                   : homePageController.destinationTEC,
             ),
             suggestionsCallback: (String location) {
-              print(location);
               return homePageController.getSuggestions(location);
             },
-            itemBuilder: (BuildContext context, String itemData) {
-              return ListTile(title: Text(itemData));
+            itemBuilder: (BuildContext context, Location itemData) {
+              return ListTile(
+                  title: Text(itemData.name + ", " + itemData.district));
             },
-            onSuggestionSelected: (String? location) {
-              this.label == "Source Location"
-                  ? homePageController.sourceTEC.text = location!
-                  : homePageController.destinationTEC.text = location!;
+            onSuggestionSelected: (Location? location) {
+              if (this.label == "Source Location") {
+                homePageController.sourceLocation = location!;
+                homePageController.sourceTEC.text = location.name;
+              } else {
+                homePageController.destinationLocation = location!;
+                homePageController.destinationTEC.text = location.name;
+              }
               if (homePageController.sourceTEC.text ==
                   homePageController.destinationTEC.text) {
                 Get.snackbar("Error", "Source and Destination cannot be same");

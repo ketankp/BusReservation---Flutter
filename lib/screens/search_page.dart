@@ -27,38 +27,42 @@ class SearchPage extends StatelessWidget {
           title: Text(this.label),
         ),
         body: Container(
-          child: TypeAheadField(
-            textFieldConfiguration: TextFieldConfiguration(
-              decoration: InputDecoration(
-                hintText: "Search Location",
-                border: OutlineInputBorder(),
+          child: Padding(
+            padding: EdgeInsets.all(15),
+            child: TypeAheadField(
+              textFieldConfiguration: TextFieldConfiguration(
+                decoration: InputDecoration(
+                  hintText: "Search Location",
+                  border: OutlineInputBorder(),
+                ),
+                controller: this.label == "Source Location"
+                    ? homePageController.sourceTEC
+                    : homePageController.destinationTEC,
               ),
-              controller: this.label == "Source Location"
-                  ? homePageController.sourceTEC
-                  : homePageController.destinationTEC,
+              suggestionsCallback: (String location) {
+                return homePageController.getSuggestions(location);
+              },
+              itemBuilder: (BuildContext context, Location itemData) {
+                return ListTile(
+                    title: Text(itemData.name + ", " + itemData.district));
+              },
+              onSuggestionSelected: (Location? location) {
+                if (this.label == "Source Location") {
+                  homePageController.sourceLocation = location!;
+                  homePageController.sourceTEC.text = location.name;
+                } else {
+                  homePageController.destinationLocation = location!;
+                  homePageController.destinationTEC.text = location.name;
+                }
+                if (homePageController.sourceTEC.text ==
+                    homePageController.destinationTEC.text) {
+                  Get.snackbar(
+                      "Error", "Source and Destination cannot be same");
+                } else {
+                  Get.back();
+                }
+              },
             ),
-            suggestionsCallback: (String location) {
-              return homePageController.getSuggestions(location);
-            },
-            itemBuilder: (BuildContext context, Location itemData) {
-              return ListTile(
-                  title: Text(itemData.name + ", " + itemData.district));
-            },
-            onSuggestionSelected: (Location? location) {
-              if (this.label == "Source Location") {
-                homePageController.sourceLocation = location!;
-                homePageController.sourceTEC.text = location.name;
-              } else {
-                homePageController.destinationLocation = location!;
-                homePageController.destinationTEC.text = location.name;
-              }
-              if (homePageController.sourceTEC.text ==
-                  homePageController.destinationTEC.text) {
-                Get.snackbar("Error", "Source and Destination cannot be same");
-              } else {
-                Get.back();
-              }
-            },
           ),
         ),
       ),

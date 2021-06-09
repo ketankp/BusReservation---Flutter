@@ -1,4 +1,5 @@
 import 'package:bus_reservation/controller/homepage_controller.dart';
+import 'package:bus_reservation/screens/bus_page.dart';
 import 'package:bus_reservation/screens/search_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,13 @@ import 'package:get/get.dart';
 // ignore: must_be_immutable
 class HomeTab extends StatelessWidget {
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+
+  void validateAndSearch() {
+    if (_formKey.currentState!.validate()) {
+      Get.to(() => BookingPage());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomePageController>(
@@ -43,7 +51,9 @@ class HomeTab extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.all(4),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            validateAndSearch();
+                          },
                           child: Row(
                             children: [
                               Icon(CupertinoIcons.search),
@@ -82,6 +92,13 @@ Widget _searchForm(String label, TextEditingController controller) {
         homePageController.getLocationData();
         Get.to(() => SearchPage(label: label));
       },
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "";
+        } else {
+          return null;
+        }
+      },
     ),
   );
 }
@@ -93,7 +110,7 @@ Widget _datePicker(BuildContext context) {
     child: Material(
       color: Colors.grey[350],
       child: Padding(
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -109,6 +126,7 @@ Widget _datePicker(BuildContext context) {
               child: Text("Today"),
               onTap: () {
                 homePageController.selectedDate = DateTime.now();
+                Get.to(() => BookingPage());
               },
             ),
             InkWell(
@@ -116,6 +134,7 @@ Widget _datePicker(BuildContext context) {
               onTap: () {
                 homePageController.selectedDate =
                     DateTime.now().add(Duration(days: 1));
+                Get.to(() => BookingPage());
               },
             ),
           ],

@@ -20,6 +20,7 @@ class SearchPage extends StatelessWidget {
               ? homePageController.sourceTEC.clear()
               : homePageController.destinationTEC.clear();
         }
+        FocusManager.instance.primaryFocus!.unfocus();
         return Future.value(true);
       },
       child: Scaffold(
@@ -35,6 +36,7 @@ class SearchPage extends StatelessWidget {
                   hintText: "Search Location",
                   border: OutlineInputBorder(),
                 ),
+                autofocus: true,
                 controller: this.label == "Source Location"
                     ? homePageController.sourceTEC
                     : homePageController.destinationTEC,

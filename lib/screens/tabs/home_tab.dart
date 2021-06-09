@@ -87,6 +87,7 @@ Widget _searchForm(String label, TextEditingController controller) {
         hintText: label,
         border: OutlineInputBorder(),
       ),
+      readOnly: true,
       controller: controller,
       onTap: () {
         homePageController.getLocationData();

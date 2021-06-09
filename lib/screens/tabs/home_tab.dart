@@ -31,6 +31,8 @@ class HomeTab extends StatelessWidget {
                     height: MediaQuery.of(context).size.width * 0.12,
                     width: MediaQuery.of(context).size.width * 0.12,
                     child: FloatingActionButton(
+                      hoverColor: Colors.amber[800],
+                      splashColor: Colors.amber[800],
                       onPressed: () {
                         controller.temp = controller.sourceTEC.text;
                         controller.sourceTEC.text =
@@ -45,9 +47,10 @@ class HomeTab extends StatelessWidget {
                   _datePicker(context),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.5,
+                    height: 50,
                     child: Material(
                       borderRadius: BorderRadius.circular(50),
-                      color: Colors.pink[800],
+                      color: Colors.amber[800],
                       child: Padding(
                         padding: EdgeInsets.all(4),
                         child: TextButton(
@@ -56,13 +59,17 @@ class HomeTab extends StatelessWidget {
                           },
                           child: Row(
                             children: [
-                              Icon(CupertinoIcons.search),
+                              Icon(
+                                CupertinoIcons.search,
+                                color: Colors.black,
+                              ),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.08,
                               ),
                               Text(
                                 "Search",
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
                               ),
                             ],
                           ),
@@ -85,8 +92,11 @@ Widget _searchForm(String label, TextEditingController controller) {
     child: TextFormField(
       decoration: InputDecoration(
         hintText: label,
+        isDense: true,
+        contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
         border: OutlineInputBorder(),
       ),
+      textAlignVertical: TextAlignVertical.center,
       readOnly: true,
       controller: controller,
       onTap: () {

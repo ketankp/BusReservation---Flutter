@@ -9,11 +9,15 @@ import 'package:get_storage/get_storage.dart';
 class AuthController extends GetxController {
   Api api = new Api();
   final storage = GetStorage();
+  RxBool loginPasswordVisible = true.obs;
 
   @override
   void onInit() async {
     super.onInit();
   }
+
+  void toggle() =>
+      loginPasswordVisible.value = loginPasswordVisible.value ? false : true;
 
   void doLogin(Map<String, dynamic> map) {
     api.check().then((value) async {

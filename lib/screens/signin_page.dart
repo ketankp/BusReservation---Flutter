@@ -30,32 +30,45 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _userName(_usernameTEC),
-                _email(_emailTEC),
-                _name(_firstNameTEC, "First Name"),
-                _name(_lastNameTEC, "Last Name"),
-                _password(_passwordTEC),
-                _password2(_password2TEC),
-                TextButton(
-                  onPressed: () {
-                    FocusManager.instance.primaryFocus!.unfocus();
-                    validateAndSubmit();
-                  },
-                  child: Text(
-                    "Sign In",
-                    style: TextStyle(
-                      color: Colors.blue,
-                    ),
+      body: Container(
+        color: Colors.grey[400],
+        child: Form(
+          key: _formKey,
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(15),
+              child: Card(
+                elevation: 5,
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Container(
+                  child: Wrap(
+                    children: [
+                      _textFormField(_usernameTEC, "Username", false,
+                          Icons.person_outline),
+                      _textFormField(
+                          _emailTEC, "Email", false, Icons.email_outlined),
+                      _textFormField(_firstNameTEC, "First Name", false,
+                          Icons.text_format_outlined),
+                      _textFormField(_lastNameTEC, "Last Name", false,
+                          Icons.text_format_outlined),
+                      _textFormField(
+                          _passwordTEC, "Password", true, Icons.lock_outline),
+                      _textFormField(_password2TEC, "Confirm Password", true,
+                          Icons.lock_outline),
+                      TextButton(
+                          onPressed: () {
+                            validateAndSubmit();
+                          },
+                          child: Center(
+                            child: Text("Sign Up"),
+                          )),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         ),
@@ -64,127 +77,26 @@ class SignInPage extends StatelessWidget {
   }
 }
 
-Widget _userName(TextEditingController username) {
+Widget _textFormField(TextEditingController controller, String name,
+    bool obscure, IconData icon) {
   return Padding(
-    padding: EdgeInsets.all(15.0),
+    padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
     child: TextFormField(
       decoration: InputDecoration(
-        prefixIcon: Icon(
-          Icons.person,
-          color: Colors.amber[800],
-        ),
-        labelText: "Username",
-        hintText: "abc",
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: Colors.amber),
-        ),
-        labelStyle: TextStyle(color: Colors.amber[800]),
+        prefixIcon: Icon(icon),
+        hintText: name,
+        isDense: true,
+        errorStyle: TextStyle(height: 0),
+        contentPadding: EdgeInsets.fromLTRB(20, 20, 20, 0),
       ),
       validator: (value) {
         if (value!.isEmpty) {
-          return "Enter Username";
+          return "";
         }
         return null;
       },
-      controller: username,
-    ),
-  );
-}
-
-Widget _email(TextEditingController email) {
-  return Padding(
-    padding: EdgeInsets.all(15.0),
-    child: TextFormField(
-      decoration: InputDecoration(
-        labelText: "Email",
-        hintText: "abc@gmail.com",
-        prefixIcon: Icon(
-          Icons.email,
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: Colors.amber),
-        ),
-      ),
-      controller: email,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return "Enter valid email";
-        }
-        return null;
-      },
-    ),
-  );
-}
-
-Widget _password(TextEditingController password) {
-  return Padding(
-    padding: EdgeInsets.all(15.0),
-    child: TextFormField(
-      decoration: InputDecoration(
-        labelText: "Password",
-        prefixIcon: Icon(Icons.lock),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: Colors.amber),
-        ),
-      ),
-      controller: password,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return "Enter Password";
-        }
-        return null;
-      },
-      obscureText: true,
-    ),
-  );
-}
-
-Widget _password2(TextEditingController password2) {
-  return Padding(
-    padding: EdgeInsets.all(15.0),
-    child: TextFormField(
-      decoration: InputDecoration(
-        labelText: "Confirm Password",
-        prefixIcon: Icon(Icons.lock),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: Colors.amber),
-        ),
-      ),
-      controller: password2,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return "Enter Password";
-        }
-        return null;
-      },
-      obscureText: true,
-    ),
-  );
-}
-
-Widget _name(TextEditingController name, String label) {
-  return Padding(
-    padding: EdgeInsets.all(15.0),
-    child: TextFormField(
-      decoration: InputDecoration(
-        labelText: label,
-        prefixIcon: Icon(Icons.text_format),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12.0),
-          borderSide: BorderSide(color: Colors.amber),
-        ),
-      ),
-      controller: name,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return "Enter valid $label";
-        }
-        return null;
-      },
+      controller: controller,
+      obscureText: obscure,
     ),
   );
 }
